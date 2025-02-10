@@ -1,0 +1,27 @@
+name: Label and Comment on PR
+
+on:
+  pull_request:
+    types: [opened, reopened, edited, ready_for_review]
+
+jobs:
+  label-and-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add auto-delete label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: auto-delete
+
+      - name: Comment on PR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo, number } = context.issue;
+            github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: number,
+              body: "This PR has been marked with 'auto-delete'. It will be closed automatically after 30 days."
+            });
