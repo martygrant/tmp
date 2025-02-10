@@ -35,7 +35,7 @@ jobs:
               const labels = pr.labels.map(l => l.name);
               if (!labels.includes(label)) continue; // Skip PRs without the label
 
-              // Get PR timeline events
+              // Fetch PR timeline events (corrected)
               const events = await github.paginate(github.rest.issues.listEvents, {
                 owner,
                 repo,
