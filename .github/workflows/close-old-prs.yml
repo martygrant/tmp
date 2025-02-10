@@ -32,27 +32,32 @@ jobs:
             });
 
             for (const pr of prs) {
-              const labels = pr.labels.map(l => l.name);
-              if (!labels.includes(label)) continue; // Skip PRs without the label
+              // Check if PR has the "auto-delete" label
+              if (!pr.labels.some(l => l.name === label)) continue;
 
-              // Fetch PR timeline events (corrected)
+              // Get the PR's label event timeline
               const events = await github.paginate(github.rest.issues.listEvents, {
                 owner,
                 repo,
                 issue_number: pr.number
               });
 
-              // Find when the "auto-delete" label was added
+              // Find the label added event
               const labelEvent = events.find(e => e.event === "labeled" && e.label.name === label);
-              
+
+              // If label added event found and is older than 1 minute, close the PR
               if (labelEvent && new Date(labelEvent.created_at).toISOString() < oneMinuteAgo) {
                 console.log(`Closing PR #${pr.number}`);
+                
+                // Close the PR
                 await github.rest.pulls.update({
                   owner,
                   repo,
                   pull_number: pr.number,
                   state: "closed"
                 });
+
+                // Comment on the PR
                 await github.rest.issues.createComment({
                   owner,
                   repo,
