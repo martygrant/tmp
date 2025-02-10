@@ -5,7 +5,7 @@ on:
     types: [opened, reopened, edited, ready_for_review]
 
 permissions:
-  pull-requests: write
+  pull-requests: write  # Only grant permission to modify PRs
 
 jobs:
   label-and-comment:
@@ -21,10 +21,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { owner, repo, number } = context.issue;
-            github.rest.issues.createComment({
-              owner,
-              repo,
-              issue_number: number,
+            const issue_number = context.payload.pull_request.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            await github.rest.issues.createComment({
+              owner: owner,
+              repo: repo,
+              issue_number: issue_number,
               body: "This PR has been marked with 'auto-delete'. It will be closed automatically if not merged within 30 days."
-           
+            });
