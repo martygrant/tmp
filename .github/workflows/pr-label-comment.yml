@@ -3,7 +3,6 @@ name: Label and Comment on PR
 on:
   pull_request:
     types: [opened, reopened, edited, ready_for_review]
-  workflow_dispatch:  # Allows manual trigger
 
 permissions:
   pull-requests: write  # Permission to modify PRs
