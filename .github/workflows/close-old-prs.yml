@@ -57,12 +57,29 @@ jobs:
                   state: "closed"
                 });
 
+                const author = pr.user.login;
+
+                const commentBody = `# Automatic PR Closure Notice
+                ## Information
+                @${pr_user} this PR has been closed automatically. It was labelled \`auto-close\` 30 days ago as part of the Unified Runtime source code migration to the intel/llvm repository - https://github.com/intel/llvm/pull/17043. 
+
+                All Unified Runtime development should be done in [intel/llvm](https://github.com/intel/llvm/tree/sycl/unified-runtime), details can be found in the updated [contribution guide](https://oneapi-src.github.io/unified-runtime/core/CONTRIB.html). 
+                
+                This repository will continue to exist as a mirror and will host the [specification documentation](https://oneapi-src.github.io/unified-runtime/).
+                
+                ## Next Steps
+                Should you wish to re-open this PR it must be moved to [intel/llvm](https://github.com/intel/llvm/tree/sycl/unified-runtime). We have provided a [script to help automate this process](https://github.com/oneapi-src/unified-runtime/blob/main/scripts/move-pr-to-intel-llvm.py), otherwise no actions are required.
+                
+                ---
+                *This is an automated comment.*
+                `;
+
                 // Comment on the PR
                 await github.rest.issues.createComment({
                   owner,
                   repo,
                   issue_number: pr.number,
-                  body: "This PR has been automatically closed 1 minute after being labeled with 'auto-delete'."
+                  body: commentBody
                 });
               }
             }
