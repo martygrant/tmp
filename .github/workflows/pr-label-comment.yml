@@ -55,11 +55,12 @@ jobs:
                   "## Information\n" +
                   "The source code of Unified Runtime has been moved to [intel/llvm](https://github.com/intel/llvm) under the [unified-runtime](https://github.com/intel/llvm/tree/sycl/unified-runtime) top-level directory,\n" +
                   "all future development will now be carried out there. This was done in https://github.com/intel/llvm/pull/17043.\n\n" +
-                  "The code will be mirrored to [oneapi-src/unified-runtime](https://github.com/oneapi-src/unified-runtime) and the specification will continue to be hosted at [oneapi-src.github.io/unified-runtime](https://oneapi-src.github.io/unified-runtime/).\n" +
+                  "The code will be mirrored to [oneapi-src/unified-runtime](https://github.com/oneapi-src/unified-runtime) and the specification will continue to be hosted at [oneapi-src.github.io/unified-runtime](https://oneapi-src.github.io/unified-runtime/).\n\n" +
                   "The [contribution guide](https://oneapi-src.github.io/unified-runtime/core/CONTRIB.html) will be updated with new instructions for contributing to Unified Runtime.\n\n" +
                   "## PR Migration\n" +
-                  "All open PRs including this one will be labelled [auto-close](https://github.com/oneapi-src/unified-runtime/labels/auto-close) and shall be **automatically closed after 30 days**.\n" +
-                  "Should you wish to continue with your PR **you will need to migrate it** to [intel/llvm](https://github.com/intel/llvm). We have provided a [script to help automate this process](https://github.com/oneapi-src/unified-runtime/blob/main/scripts/move-pr-to-intel-llvm.py).\n\n" +
+                  "All open PRs including this one will be labelled [auto-close](https://github.com/oneapi-src/unified-runtime/labels/auto-close) and shall be **automatically closed after 30 days**.\n\n" +
+                  "Should you wish to continue with your PR **you will need to migrate it** to [intel/llvm](https://github.com/intel/llvm).\n\n" +
+                  "We have provided a [script to help automate this process](https://github.com/oneapi-src/unified-runtime/blob/main/scripts/move-pr-to-intel-llvm.py).\n\n" +
                   "---\n" +
                   "*This is an automated comment.*";
 
