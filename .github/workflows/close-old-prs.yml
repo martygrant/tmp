@@ -62,7 +62,7 @@ jobs:
                 const commentBody = 
                   "# Automatic PR Closure Notice\n" +
                   "## Information\n" +
-                  "This PR has been closed automatically. It was labelled [auto-close](https://github.com/oneapi-src/unified-runtime/labels/auto-close) 30 days ago as part of the Unified Runtime source code migration to the intel/llvm repository - https://github.com/intel/llvm/pull/17043.\n\n" +
+                  "This PR has been closed automatically. It was marked with the `auto-close` [label](https://github.com/oneapi-src/unified-runtime/labels/auto-close) 30 days ago as part of the Unified Runtime source code migration to the intel/llvm repository - https://github.com/intel/llvm/pull/17043.\n\n" +
                   "All Unified Runtime development should be done in [intel/llvm](https://github.com/intel/llvm/tree/sycl/unified-runtime), details can be found in the updated [contribution guide](https://oneapi-src.github.io/unified-runtime/core/CONTRIB.html).\n" +
                   "This repository will continue to exist as a mirror and will host the [specification documentation](https://oneapi-src.github.io/unified-runtime/).\n\n" +
                   "## Next Steps\n" +

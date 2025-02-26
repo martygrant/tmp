@@ -62,7 +62,6 @@ jobs:
                   "Should you wish to continue with your PR **you will need to migrate it** to [intel/llvm](https://github.com/intel/llvm).\n" +
                   "We have provided a [script to help automate this process](https://github.com/oneapi-src/unified-runtime/blob/main/scripts/move-pr-to-intel-llvm.py).\n\n" +
                   "If your PR should remain open and not be closed automatically, you can remove the `auto-close` label.\n\n" +
-                  "@${author}"
                   "---\n" +
                   "*This is an automated comment.*";
 
