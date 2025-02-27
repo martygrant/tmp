@@ -1,19 +1,19 @@
-name: Auto-Close PRs After 1 Minute
+name: Auto-Close PRs after 30 days
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # Runs every minute
-  workflow_dispatch:  # Allows manual trigger
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 permissions:
-  pull-requests: write  # Needed to close PRs
-  issues: read          # Needed to read issue events
+  pull-requests: write
+  issues: read
 
 jobs:
   close-stale-prs:
     runs-on: ubuntu-latest
     steps:
-      - name: Close PRs labeled "auto-delete"
+      - name: Close PRs labeled "auto-close"
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -21,7 +21,8 @@ jobs:
             const { owner, repo } = context.repo;
             const label = "auto-close";
             const now = new Date();
-            const oneMinuteAgo = new Date(now.getTime() - 60 * 1000).toISOString();
+            const millisecondsInADay = 60 * 1000; // temporarily just 1 minute for testing //24 * 60 * 60 * 1000;
+            const autoCloseDays = 1; // temporarily just 1 minute for testing // 30; // how many days before PRs should be closed automatically
 
             // Fetch all open PRs
             const prs = await github.paginate(github.rest.pulls.list, {
@@ -32,7 +33,7 @@ jobs:
             });
 
             for (const pr of prs) {
-              // Check if PR has the "auto-delete" label
+              // Check if PR has the "auto-close" label
               if (!pr.labels.some(l => l.name === label)) continue;
 
               // Get the PR's label event timeline
@@ -45,8 +46,10 @@ jobs:
               // Find the label added event
               const labelEvent = events.find(e => e.event === "labeled" && e.label.name === label);
 
-              // If label added event found and is older than 1 minute, close the PR
-              if (labelEvent && new Date(labelEvent.created_at).toISOString() < oneMinuteAgo) {
+              const timeSinceLabeled = Math.floor((now - new Date(labelEvent.created_at)) / millisecondsInADay);
+
+              // If label added event found and is older than autoCloseDays days, close the PR
+              if (labelEvent && timeSinceLabeled >= autoCloseDays) {
                 console.log(`Closing PR #${pr.number}`);
                 
                 // Close the PR
@@ -56,8 +59,6 @@ jobs:
                   pull_number: pr.number,
                   state: "closed"
                 });
-
-                const author = pr.user.login;
 
                 const commentBody = 
                   "# Automatic PR Closure Notice\n" +
