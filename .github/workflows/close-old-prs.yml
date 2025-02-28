@@ -25,14 +25,14 @@ jobs:
             const autoCloseDays = 1; // temporarily just 1 minute for testing // 30; // how many days before PRs should be closed automatically
 
             // Fetch all open PRs
-            const prs = await github.paginate(github.rest.pulls.list, {
+            const open_pulls = await github.paginate(github.rest.pulls.list, {
               owner,
               repo,
               state: "open",
               per_page: 100
             });
 
-            for (const pr of prs) {
+            for (const pr of open_pulls) {
               // Check if PR has the "auto-close" label
               if (!pr.labels.some(l => l.name === label)) continue;
 
